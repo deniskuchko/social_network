@@ -1,0 +1,32 @@
+.friend {
+  display: inline-block;
+  margin: 10px;
+  text-align: center;
+}
+.friend a {
+  text-decoration: none;
+  color: white;
+  transition: 1s;
+}
+.friend a:hover {
+  color: gold;
+}
+.friend a:hover img {
+  transform: scale(2);
+  color: gold;
+}
+.friend .friendsPhoto {
+  display: inline-block;
+  overflow: hidden;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+.friend .friendsPhoto img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  transition: 1s;
+}
+.friend .friendsName {
+}

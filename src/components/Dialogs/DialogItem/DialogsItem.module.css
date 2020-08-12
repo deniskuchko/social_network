@@ -1,0 +1,20 @@
+.dialog {
+  padding: 5px;
+  color: yellow;
+  text-decoration: none;
+  line-height: 40px;
+  display: flex;
+}
+.active:hover {
+  color: gold;
+}
+
+.personPhoto {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  border-radius: 50%;
+}
+.personeName {
+  display: inline-block;
+}
