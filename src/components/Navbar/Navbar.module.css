@@ -17,8 +17,10 @@
 .sidebarFriends h3 {
   font-size: 36px;
   color: white;
-  margin: 150px 0 10px 0;
+  margin: 75px 0 10px 0;
 }
 .friends {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
