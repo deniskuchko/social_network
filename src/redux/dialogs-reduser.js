@@ -43,15 +43,17 @@ const dialogseReducer = (state = initialState, action) => {
         id: 4,
         message: body,
       };
-      state.messages.push(newMessage);
-      state.newMessageBody = "";
-
-      return state;
+      return {
+        ...state,
+        newMessageBody: "",
+        messages: [...state.messages, newMessage],
+      };
 
     case UPDATE_NEW_MESSAGE_BODY:
-      state.newMessageBody = action.body;
-
-      return state;
+      return {
+        ...state,
+        newMessageBody: action.body,
+      };
 
     default:
       return state;
