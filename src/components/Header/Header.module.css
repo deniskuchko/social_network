@@ -10,3 +10,14 @@
   margin-top: 3px;
   border-radius: 50%;
 }
+.loginBlock {
+  float: right;
+}
+
+.loginBlock a {
+  color: white;
+  text-decoration: none;
+  position: relative;
+  top: 20px;
+  right: 20px;
+}

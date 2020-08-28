@@ -14,33 +14,28 @@ import {
 import Users from "./Users";
 import s from "./Users.module.css";
 import Preloader from "../common/Preloader/Preloader";
+import { usersAPI } from "../../api/api";
 class UsersContainer extends React.Component {
   componentDidMount() {
     this.props.toogleIsFetching(true);
-    axios
-      .get(
-        `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`
-      )
-      .then((response) => {
-        this.props.toogleIsFetching(false);
 
-        this.props.setUsers(response.data.items);
-        this.props.setTotalUsersCount(response.data.totalCount);
+    usersAPI
+      .getUsers(this.props.currentPage, this.props.pageSize)
+      .then((data) => {
+        debugger;
+        this.props.toogleIsFetching(false);
+        this.props.setUsers(data.items);
+        this.props.setTotalUsersCount(data.totalCount);
       });
   }
   onPageChanged = (pageNumber) => {
-    this.props.toogleIsFetching(true);
-
     this.props.setCurrentPage(pageNumber);
-    axios
-      .get(
-        `https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`
-      )
-      .then((response) => {
-        this.props.toogleIsFetching(false);
+    this.props.toogleIsFetching(true);
+    usersAPI.getUsers(pageNumber, this.props.pageSize).then((data) => {
+      this.props.toogleIsFetching(false);
 
-        this.props.setUsers(response.data.items);
-      });
+      this.props.setUsers(data.items);
+    });
   };
 
   render() {
@@ -55,6 +50,7 @@ class UsersContainer extends React.Component {
           onPageChanged={this.onPageChanged}
           unfollow={this.props.unfollow}
           follow={this.props.follow}
+          usersAPI={usersAPI}
         />
       </>
     );
@@ -69,30 +65,6 @@ let mapSetToProps = (state) => {
     isFetching: state.usersPage.isFetching,
   };
 };
-/* 
-let mapDispatchToProps = (dispatch) => {
-  return {
-    follow: (userId) => {
-      dispatch(followAC(userId));
-    },
-    unfollow: (userId) => {
-      dispatch(unfollowAC(userId));
-    },
-    setUsers: (users) => {
-      dispatch(setUsersAC(users));
-    },
-    setCurrentPage: (pageNumber) => {
-      dispatch(setCurrentPageAC(pageNumber));
-    },
-    setTotalUsersCount: (totalCount) => {
-      dispatch(setTotalUsersCountAC(totalCount));
-    },
-    toogleIsFetching: (isFetching) => {
-      dispatch(toogleIsFetchingAC(isFetching));
-    },
-  };
-}; */
-
 export default connect(mapSetToProps, {
   follow,
   unfollow,

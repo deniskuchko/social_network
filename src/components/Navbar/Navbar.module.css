@@ -8,6 +8,9 @@
   color: white;
   text-decoration: none;
 }
+.item a:hover {
+  color: gold;
+}
 .item a.activeLink {
   color: gold;
 }
