@@ -13,18 +13,20 @@ export const usersAPI = {
       .get(`users?page=${currentPage}&count=${pageSize}`)
       .then((response) => response.data);
   },
-  deleteFollowUsers: (id, unfollow) => {
+  deleteFollowUsers: (id, unfollow, toogleFollowingProgress) => {
     return instance.delete(`follow/${id}`).then((response) => {
       if (response.data.resultCode === 0) {
         unfollow(id);
       }
+      toogleFollowingProgress(false, id);
     });
   },
-  postFollowUsers: (id, follow) => {
+  postFollowUsers: (id, follow, toogleFollowingProgress) => {
     return instance.post(`follow/${id}`).then((response) => {
       if (response.data.resultCode === 0) {
         follow(id);
       }
+      toogleFollowingProgress(false, id);
     });
   },
 };

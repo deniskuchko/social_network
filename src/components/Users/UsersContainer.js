@@ -9,12 +9,14 @@ import {
   setCurrentPage,
   setTotalUsersCount,
   toogleIsFetching,
+  toogleFollowingProgress,
 } from "../../redux/users-reduser";
 
 import Users from "./Users";
 import s from "./Users.module.css";
 import Preloader from "../common/Preloader/Preloader";
 import { usersAPI } from "../../api/api";
+
 class UsersContainer extends React.Component {
   componentDidMount() {
     this.props.toogleIsFetching(true);
@@ -22,7 +24,6 @@ class UsersContainer extends React.Component {
     usersAPI
       .getUsers(this.props.currentPage, this.props.pageSize)
       .then((data) => {
-        debugger;
         this.props.toogleIsFetching(false);
         this.props.setUsers(data.items);
         this.props.setTotalUsersCount(data.totalCount);
@@ -31,9 +32,9 @@ class UsersContainer extends React.Component {
   onPageChanged = (pageNumber) => {
     this.props.setCurrentPage(pageNumber);
     this.props.toogleIsFetching(true);
+
     usersAPI.getUsers(pageNumber, this.props.pageSize).then((data) => {
       this.props.toogleIsFetching(false);
-
       this.props.setUsers(data.items);
     });
   };
@@ -51,6 +52,8 @@ class UsersContainer extends React.Component {
           unfollow={this.props.unfollow}
           follow={this.props.follow}
           usersAPI={usersAPI}
+          toogleFollowingProgress={this.props.toogleFollowingProgress}
+          followingInPrigress={this.props.followingInPrigress}
         />
       </>
     );
@@ -63,6 +66,7 @@ let mapSetToProps = (state) => {
     totalUsersCount: state.usersPage.totalUsersCount,
     currentPage: state.usersPage.currentPage,
     isFetching: state.usersPage.isFetching,
+    followingInPrigress: state.usersPage.followingInPrigress,
   };
 };
 export default connect(mapSetToProps, {
@@ -72,4 +76,5 @@ export default connect(mapSetToProps, {
   setCurrentPage,
   setTotalUsersCount,
   toogleIsFetching,
+  toogleFollowingProgress,
 })(UsersContainer);
