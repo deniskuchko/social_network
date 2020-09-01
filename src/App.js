@@ -7,6 +7,7 @@ import NavbarContainer from "./components/Navbar/NavbarContainer";
 import UsersContsiner from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
+import LoginPage from "./components/Login/Login";
 
 /* import Technologies from "./Technologis.js";
 import Footer from "./Footer";
@@ -28,6 +29,7 @@ const App = () => {
             </div>
           )}
         />
+        <Route path="/login" render={() => <LoginPage />} />
 
         <Route path="/news" render={() => <DialogsContainer />} />
         <Route path="/music" render={() => <DialogsContainer />} />

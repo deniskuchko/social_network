@@ -1,9 +1,7 @@
 import React from "react";
 import s from "./Users.module.css";
-import * as axios from "axios";
 import userPhoto from "../../assets/images/user.png";
 import { NavLink } from "react-router-dom";
-import { usersAPI } from "../../api/api";
 
 let Users = (props) => {
   let pageCount = Math.ceil(props.totalUsersCount / props.pageSize);
@@ -44,12 +42,7 @@ let Users = (props) => {
                 <button
                   disabled={props.followingInPrigress.some((id) => id === u.id)}
                   onClick={() => {
-                    props.toogleFollowingProgress(true, u.id);
-                    usersAPI.deleteFollowUsers(
-                      u.id,
-                      props.unfollow,
-                      props.toogleFollowingProgress
-                    );
+                    props.unfollow(u.id);
                   }}
                 >
                   unfollowed
@@ -58,13 +51,7 @@ let Users = (props) => {
                 <button
                   disabled={props.followingInPrigress.some((id) => id === u.id)}
                   onClick={() => {
-                    props.toogleFollowingProgress(true, u.id);
-
-                    usersAPI.postFollowUsers(
-                      u.id,
-                      props.follow,
-                      props.toogleFollowingProgress
-                    );
+                    props.follow(u.id);
                   }}
                 >
                   followed

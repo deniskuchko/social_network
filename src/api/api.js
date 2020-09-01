@@ -8,25 +8,25 @@ let instance = axios.create({
   },
 });
 export const usersAPI = {
-  getUsers: (currentPage = 1, pageSize = 2) => {
+  getUsers(currentPage, pageSize) {
     return instance
       .get(`users?page=${currentPage}&count=${pageSize}`)
       .then((response) => response.data);
   },
-  deleteFollowUsers: (id, unfollow, toogleFollowingProgress) => {
-    return instance.delete(`follow/${id}`).then((response) => {
-      if (response.data.resultCode === 0) {
-        unfollow(id);
-      }
-      toogleFollowingProgress(false, id);
-    });
+  getProfile(usersId) {
+    return instance.get("profile/" + usersId);
   },
-  postFollowUsers: (id, follow, toogleFollowingProgress) => {
-    return instance.post(`follow/${id}`).then((response) => {
-      if (response.data.resultCode === 0) {
-        follow(id);
-      }
-      toogleFollowingProgress(false, id);
-    });
+  unfollow(id) {
+    return instance.delete(`follow/${id}`);
+  },
+
+  follow(id) {
+    return instance.post(`follow/${id}`);
+  },
+};
+
+export const authAPI = {
+  me() {
+    return instance.get("https://social-network.samuraijs.com/api/1.0/auth/me");
   },
 };

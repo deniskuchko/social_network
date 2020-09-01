@@ -13,6 +13,9 @@ const ProfileInfo = (props) => {
       <div>
         <img src={`${props.profile.photos.large}`} />
       </div>
+      <div>
+        <h3>{`Full Name: ${props.profile.fullName}`}</h3>
+      </div>
     </div>
   );
 };
