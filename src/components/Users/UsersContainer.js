@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import * as axios from "axios";
 
 import {
   unfollow,
@@ -13,6 +12,8 @@ import Users from "./Users";
 import s from "./Users.module.css";
 import Preloader from "../common/Preloader/Preloader";
 import { usersAPI } from "../../api/api";
+import { withAuthRedirect } from "../../hoc/withAuthRedirect";
+import { compose } from "redux";
 
 class UsersContainer extends React.Component {
   componentDidMount() {
@@ -41,7 +42,7 @@ class UsersContainer extends React.Component {
     );
   }
 }
-let mapSetToProps = (state) => {
+let mapStateToProps = (state) => {
   return {
     users: state.usersPage.users,
     pageSize: state.usersPage.pageSize,
@@ -51,9 +52,13 @@ let mapSetToProps = (state) => {
     followingInPrigress: state.usersPage.followingInPrigress,
   };
 };
-export default connect(mapSetToProps, {
-  unfollow,
-  follow,
-  toogleFollowingProgress,
-  getUsers,
-})(UsersContainer);
+
+export default compose(
+  withAuthRedirect,
+  connect(mapStateToProps, {
+    unfollow,
+    follow,
+    toogleFollowingProgress,
+    getUsers,
+  })
+)(UsersContainer);
