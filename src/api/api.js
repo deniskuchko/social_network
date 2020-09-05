@@ -14,7 +14,8 @@ export const usersAPI = {
       .then((response) => response.data);
   },
   getProfile(usersId) {
-    return instance.get("profile/" + usersId);
+    console.warn("Obsolote method. Please profile object");
+    return profileAPI.getProfile(usersId);
   },
   unfollow(id) {
     return instance.delete(`follow/${id}`);
@@ -24,9 +25,26 @@ export const usersAPI = {
     return instance.post(`follow/${id}`);
   },
 };
+export const profileAPI = {
+  getProfile(usersId) {
+    return instance.get("profile/" + usersId);
+  },
+  getStatus(usersId) {
+    return instance.get("profile/status/" + usersId);
+  },
+  updateStatus(status) {
+    return instance.put("profile/status/", { status: status });
+  },
+};
 
 export const authAPI = {
   me() {
-    return instance.get("https://social-network.samuraijs.com/api/1.0/auth/me");
+    return instance.get("auth/me");
+  },
+  login(email, password, rememberMe = false) {
+    return instance.post("/auth/login", { email, password, rememberMe });
+  },
+  logout() {
+    return instance.delete("/auth/login");
   },
 };

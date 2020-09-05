@@ -2,10 +2,15 @@ import React from "react";
 import s from "./Dialogs.module.css";
 import DialogItem from "./DialogItem/DialogsItem";
 import Message from "./Message/Message";
+import { Field, reduxForm } from "redux-form";
+import { FormControl } from "../common/FormsControls/FormsControls";
+import { required, maxLengthCreator } from "../../utils/validators/validators";
+
+let Textarea = FormControl("textarea");
+
+let maxLength50 = maxLengthCreator(50);
 const Dialogs = (props) => {
   let state = props.dialogsPage;
-
-  let newMessageBody = state.newMessageBody;
 
   let dialogsElements = state.dialogs.map((d) => (
     <DialogItem key={d.id} name={d.name} id={d.id} photo={d.photo} />
@@ -14,12 +19,8 @@ const Dialogs = (props) => {
     <Message key={m.id} message={m.message} />
   ));
 
-  let onSendMessageClick = () => {
-    props.sendMessage();
-  };
-  let onNewMessageChange = (e) => {
-    let body = e.target.value;
-    props.updateNewMessageBody(body);
+  let addNewMessage = (values) => {
+    props.sendMessage(values.newMessageBody);
   };
   return (
     <div className={s.dialogs}>
@@ -31,14 +32,29 @@ const Dialogs = (props) => {
         <DialogItem name={dialogsData[3].name} id={dialogsData[3].id} /> */}
       </div>
       <div className={s.messages}>{messagesElements}</div>
-      <textarea
-        onChange={onNewMessageChange}
-        value={newMessageBody}
-        placeholder="Enter your message"
-      ></textarea>
-      <button onClick={onSendMessageClick}>Add new message</button>
+      <AddMessageFormRedux onSubmit={addNewMessage} />
     </div>
   );
 };
 
+const AddMessageForm = (props) => {
+  return (
+    <form onSubmit={props.handleSubmit}>
+      <div>
+        <Field
+          placeholder="Enter your message"
+          name="newMessageBody"
+          component={Textarea}
+          validate={[required, maxLength50]}
+        ></Field>
+      </div>
+      <div>
+        <button>Add new message</button>
+      </div>
+    </form>
+  );
+};
+const AddMessageFormRedux = reduxForm({
+  form: "dialogAddMessageForm",
+})(AddMessageForm);
 export default Dialogs;
