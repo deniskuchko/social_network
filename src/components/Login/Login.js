@@ -4,6 +4,8 @@ import { FormControl } from "../common/FormsControls/FormsControls";
 import { required, maxLengthCreator } from "../../utils/validators/validators";
 import { connect } from "react-redux";
 import { login } from "../../redux/auth-reducer";
+import { Redirect } from "react-router-dom";
+import s from "../common/FormsControls/FormsControls.module.css";
 
 let Input = FormControl("input");
 let maxLength25 = maxLengthCreator(25);
@@ -33,6 +35,7 @@ const LoginForm = (props) => {
           <Field type={"checkbox"} name={"rememberMe"} component={Input} />
           Remember me
         </div>
+        {props.error && <div className={s.formSummaryError}>{props.error}</div>}
         <div>
           <button> Login</button>
         </div>
@@ -49,6 +52,9 @@ const Login = (props) => {
   const onSubmit = (formData) => {
     props.login(formData.email, formData.password, formData.rememberMe);
   };
+  if (props.isAuth) {
+    return <Redirect to={"/profile"} />;
+  }
   return (
     <div>
       <h1> login</h1>;
@@ -56,5 +62,7 @@ const Login = (props) => {
     </div>
   );
 };
-
-export default connect(null, { login })(Login);
+const mapStateToProps = (state) => ({
+  isAuth: state.auth.isAuth,
+});
+export default connect(mapStateToProps, { login })(Login);

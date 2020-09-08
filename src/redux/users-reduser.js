@@ -54,7 +54,7 @@ const usersReducer = (state = initialState, action) => {
         ...state,
         followingInPrigress: action.isFetching
           ? [...state.followingInPrigress, action.userId]
-          : state.followingInPrigress.filter((id) => id != action.userId),
+          : state.followingInPrigress.filter((id) => id !== action.userId),
       };
     default:
       return state;
@@ -90,15 +90,15 @@ export const toogleFollowingProgress = (isFetching, userId) => ({
   userId,
 });
 
-export const getUsers = (currentPage, pageSize) => {
+export const requestUsers = (page, pageSize) => {
   return (dispatch) => {
     dispatch(toogleIsFetching(true));
+    dispatch(setCurrentPage(page));
 
-    usersAPI.getUsers(currentPage, pageSize).then((data) => {
+    usersAPI.getUsers(page, pageSize).then((data) => {
       dispatch(toogleIsFetching(false));
       dispatch(setUsers(data.items));
       dispatch(setTotalUsersCount(data.totalCount));
-      dispatch(setCurrentPage(currentPage));
     });
   };
 };
