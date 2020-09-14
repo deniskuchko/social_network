@@ -7,9 +7,11 @@ import {
   maxLengthCreator,
 } from "../../../utils/validators/validators";
 import { FormControl } from "../../common/FormsControls/FormsControls";
+
 let Textarea = FormControl("textarea");
 const maxLengthCreator10 = maxLengthCreator(10);
-const MyPosts = (props) => {
+
+const MyPosts = React.memo((props) => {
   let postsElements = props.posts.map((p) => (
     <Post key={p.id} message={p.message} likesCount={p.likesCount} />
   ));
@@ -17,6 +19,7 @@ const MyPosts = (props) => {
   let onAddPost = (values) => {
     props.addPost(values.newPostText);
   };
+
   return (
     <div className={s.postsBlock}>
       <h3>My posts</h3>
@@ -26,7 +29,7 @@ const MyPosts = (props) => {
       <div className={s.posts}>{postsElements}</div>
     </div>
   );
-};
+});
 
 let AddNewPostForm = (props) => {
   return (
