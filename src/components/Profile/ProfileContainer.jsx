@@ -12,6 +12,7 @@ import { compose } from "redux";
 
 class ProfileContainer extends React.Component {
   componentDidMount() {
+    debugger;
     let usersId = this.props.match.params.usersId;
     if (!usersId) {
       usersId = this.props.authorisedUserId;
