@@ -21,19 +21,19 @@ const ProfileContainer = React.lazy(() =>
 );
 
 class App extends React.Component {
-  catchAllUnHandleErrors = (promiseRejectedEvent) => {
+  /* catchAllUnHandleErrors = (promiseRejectedEvent) => {
     alert("Some error occured");
-  };
+  }; */
   componentDidMount() {
     this.props.initialise();
-    window.addEventListener("unhandledrejection", this.catchAllUnHandleErrors);
+    // window.addEventListener("unhandledrejection", this.catchAllUnHandleErrors);
   }
-  componentWillUnmount() {
+  /*  componentWillUnmount() {
     window.removeEventListener(
       "unhandledrejection",
       this.catchAllUnHandleErrors
     );
-  }
+  } */
   render() {
     if (!this.props.initialised) {
       return <Preloader />;

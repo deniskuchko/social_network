@@ -1,11 +1,11 @@
 import React from "react";
 import Preloader from "../../common/Preloader/Preloader";
-import ProfileStatus from "./ProfileStatus";
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 import userPhoto from "../../../assets/images/user.png";
 
 import s from "./ProfileInfo.module.css";
 import { useState } from "react";
+import ProfileDataFormReduxForm from "./ProfileDataForm";
 
 const ProfileInfo = ({
   profile,
@@ -14,6 +14,7 @@ const ProfileInfo = ({
   updateStatus,
   savePhoto,
   isPhotoSetup,
+  saveProfile,
 }) => {
   let [editMode, setEditMode] = useState(false);
 
@@ -24,6 +25,11 @@ const ProfileInfo = ({
         return <Preloader />;
       }
     }
+  };
+  const onSubmit = (formData) => {
+    saveProfile(formData).then(() => {
+      setEditMode(false);
+    });
   };
   if (!profile) {
     return <Preloader />;
@@ -41,7 +47,11 @@ const ProfileInfo = ({
         {isOwner && <input type="file" onChange={onMainPhotoSelected} />}
       </div>
       {editMode ? (
-        <ProfileForm profile={profile} />
+        <ProfileDataFormReduxForm
+          initialValues={profile}
+          onSubmit={onSubmit}
+          profile={profile}
+        />
       ) : (
         <ProfileData
           profile={profile}
@@ -96,9 +106,7 @@ const ProfileData = ({ profile, isOwner, goToEditMode }) => {
     </div>
   );
 };
-const ProfileForm = ({ profile }) => {
-  return <div>Form</div>;
-};
+
 const Contacts = ({ contactTitls, contactValue }) => {
   return (
     <div className={s.contact}>
