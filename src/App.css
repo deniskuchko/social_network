@@ -11,13 +11,22 @@
   grid-gap: 10px;
   border-radius: 10px;
   background-color: black;
-  height: 100vh;
-  /*   grid-gap: 10px;
- */
+  width: fit-content;
 }
 
 .app-wrapper-content {
   grid-area: c;
   background-color: rebeccapurple;
   border-radius: 10px;
+}
+
+button {
+  background: linear-gradient(90deg, #310147, #a101d1);
+  position: relative;
+  color: #fff;
+  letter-spacing: 2px;
+  border-radius: 40px;
+
+  font-size: 16px;
+  outline: none;
 }

@@ -2,14 +2,24 @@
   padding: 10px;
 }
 
-.imageBlock {
-  width: 100%;
+.descriptionBlock .imageBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .imageBlock img {
   max-width: 100%;
   object-fit: cover;
-  width: 100%;
   border-radius: 10px;
+}
+.imageBlock input {
+  text-align: center;
+  max-width: 115px;
+}
+.descriptionBlock .informPerson {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .mainPhoto {
   max-width: 200px;

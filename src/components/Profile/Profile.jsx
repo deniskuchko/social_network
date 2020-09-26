@@ -14,6 +14,7 @@ const Profile = (props) => {
         savePhoto={props.savePhoto}
         isPhotoSetup={props.isPhotoSetup}
         saveProfile={props.saveProfile}
+        isDisabledSave={props.isDisabledSave}
       />
 
       <MyPostsContainer />

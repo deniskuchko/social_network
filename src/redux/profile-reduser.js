@@ -7,6 +7,7 @@ const SET_STATUS = "SET_STATUS";
 const DELETE_POST = "DELETE_POST";
 const SAVE_PHOTO_SUCCESS = "SAVE_PHOTO_SUCCESS";
 const PHOTO_SETUP = "PHOTO_SETUP";
+const DISABLED_SAVE = "DISABLED_SAVE";
 
 let initialState = {
   posts: [
@@ -16,6 +17,7 @@ let initialState = {
   profile: null,
   status: "",
   isPhotoSetup: false,
+  isDisabledSave: false,
 };
 const profileReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -55,6 +57,11 @@ const profileReducer = (state = initialState, action) => {
         ...state,
         isPhotoSetup: action.isPhotoSetup,
       };
+    case DISABLED_SAVE:
+      return {
+        ...state,
+        isDisabledSave: action.isDisabledSave,
+      };
     default:
       return state;
   }
@@ -80,7 +87,10 @@ export const photoSetup = (isPhotoSetup) => ({
   type: PHOTO_SETUP,
   isPhotoSetup,
 });
-
+const disabledSave = (isDisabledSave) => ({
+  type: DISABLED_SAVE,
+  isDisabledSave,
+});
 export const savePhotoSuccess = (photos) => ({
   type: SAVE_PHOTO_SUCCESS,
   photos,
@@ -118,22 +128,26 @@ export const savePhoto = (file) => {
 export const saveProfile = (profile) => {
   return async (dispatch, getState) => {
     const userId = getState().auth.userId;
+    dispatch(disabledSave(true));
+
     const response = await profileAPI.saveProfile(profile);
     if (response.data.resultCode === 0) {
       dispatch(getUserProfile(userId));
     } else {
-      dispatch(
-        stopSubmit("edit-profile", {
-          _error: response.data.messages[0],
-        })
-
-        /* dispatch(
+      const contactError = response.data.messages.map((item) => {
+        return item.split("->")[1].toLowerCase().split(")")[0];
+      });
+      contactError.forEach((element, index) => {
+        debugger;
+        return dispatch(
           stopSubmit("edit-profile", {
-            contacts: { facebook: response.data.messages[0] },
-          }) */
-      );
+            contacts: { [element]: response.data.messages[index] },
+          })
+        );
+      });
       return Promise.reject(response.data.messages[0]);
     }
+    dispatch(disabledSave(false));
   };
 };
 export default profileReducer;

@@ -48,8 +48,6 @@ const LoginReduxForm = reduxForm({
 
 const Login = ({ login, isAuth, captchaUrl }) => {
   const onSubmit = ({ email, password, rememberMe, captcha }) => {
-    debugger;
-
     login(email, password, rememberMe, captcha);
   };
   if (isAuth) {

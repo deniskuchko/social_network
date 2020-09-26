@@ -1,5 +1,5 @@
 import React from "react";
-import { reduxForm } from "redux-form";
+import { change, reduxForm } from "redux-form";
 import { setStatus } from "../../../redux/profile-reduser";
 import {
   maxLengthCreator,
@@ -16,11 +16,11 @@ import style from "../../common/FormsControls/FormsControls.module.css";
 let Input = FormControl("input");
 let Textarea = FormControl("textarea");
 
-const ProfileDataForm = ({ handleSubmit, profile, error }) => {
+const ProfileDataForm = ({ handleSubmit, profile, error, isDisabledSave }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <button>save</button>
+        <button disabled={isDisabledSave}>save</button>
       </div>
       <div>
         {error && <div className={style.formSummaryError}>{error}</div>}
@@ -46,16 +46,16 @@ const ProfileDataForm = ({ handleSubmit, profile, error }) => {
         </div>
 
         <div>
-          <b>About me:</b>
+          <b>About me: </b>
           {createFields("About me", "aboutMe", Textarea, [])}
         </div>
         <div>
-          <b>Contacts:</b>
+          <b>Contacts: </b>
           {Object.keys(profile.contacts).map((key) => {
             return (
               <div key={key} className={s.contacts}>
                 <b>
-                  {key}:{createFields(key, "contacts." + key, Textarea, [])}
+                  {key}: {createFields(key, "contacts." + key, Textarea, [])}
                 </b>
               </div>
             );

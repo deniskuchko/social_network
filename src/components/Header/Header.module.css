@@ -2,6 +2,9 @@
   grid-area: h;
   background-color: green;
   border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .header img {
   height: 90%;
@@ -12,6 +15,7 @@
 }
 .loginBlock {
   float: right;
+  margin-right: 20px;
 }
 
 .loginBlock a {

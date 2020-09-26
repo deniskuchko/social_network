@@ -43,6 +43,7 @@ class ProfileContainer extends React.Component {
         savePhoto={this.props.savePhoto}
         isPhotoSetup={this.props.isPhotoSetup}
         saveProfile={this.props.saveProfile}
+        isDisabledSave={this.props.isDisabledSave}
       />
     );
   }
@@ -53,6 +54,7 @@ let mapStateToProps = (state) => ({
   authorisedUserId: state.auth.userId,
   isAuth: state.auth.isAuth,
   isPhotoSetup: state.profilePage.isPhotoSetup,
+  isDisabledSave: state.profilePage.isDisabledSave,
 });
 
 export default compose(

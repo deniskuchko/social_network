@@ -15,6 +15,7 @@ const ProfileInfo = ({
   savePhoto,
   isPhotoSetup,
   saveProfile,
+  isDisabledSave,
 }) => {
   let [editMode, setEditMode] = useState(false);
 
@@ -40,28 +41,28 @@ const ProfileInfo = ({
   return (
     <div className={s.descriptionBlock}>
       <div className={s.imageBlock}>
-        <img src="https://bipbap.ru/wp-content/uploads/2019/07/59b21ebebd0470cb6d8b4570.jpg" />
-      </div>
-      <div>
         <img src={profile.photos.large || userPhoto} className={s.mainPhoto} />
         {isOwner && <input type="file" onChange={onMainPhotoSelected} />}
       </div>
-      {editMode ? (
-        <ProfileDataFormReduxForm
-          initialValues={profile}
-          onSubmit={onSubmit}
-          profile={profile}
-        />
-      ) : (
-        <ProfileData
-          profile={profile}
-          isOwner={isOwner}
-          goToEditMode={() => {
-            setEditMode(true);
-          }}
-        />
-      )}
-      <ProfileStatusWithHooks status={status} updateStatus={updateStatus} />
+      <div className={s.informPerson}>
+        {editMode ? (
+          <ProfileDataFormReduxForm
+            initialValues={profile}
+            onSubmit={onSubmit}
+            profile={profile}
+            isDisabledSave={isDisabledSave}
+          />
+        ) : (
+          <ProfileData
+            profile={profile}
+            isOwner={isOwner}
+            goToEditMode={() => {
+              setEditMode(true);
+            }}
+          />
+        )}
+        <ProfileStatusWithHooks status={status} updateStatus={updateStatus} />
+      </div>
     </div>
   );
 };
@@ -76,22 +77,22 @@ const ProfileData = ({ profile, isOwner, goToEditMode }) => {
       )}
 
       <div>
-        <b>Full name:</b> {profile.fullName}
+        <b>Full name: </b> {profile.fullName}
       </div>
       <div>
         <div>
-          <b>Looking for a job:</b> {profile.lookingForAJob ? "yes" : "no"}
+          <b>Looking for a job: </b> {profile.lookingForAJob ? "yes" : "no"}
         </div>
         {profile.lookingForAJob && (
           <div>
-            <b>My professional skils:</b> {profile.lookingForAJobDescription}
+            <b>My professional skils: </b> {profile.lookingForAJobDescription}
           </div>
         )}
         <div>
-          <b>About me:</b> {profile.aboutMe}
+          <b>About me: </b> {profile.aboutMe}
         </div>
         <div>
-          <b>Contacts:</b>
+          <b>Contacts: </b>
           {Object.keys(profile.contacts).map((key) => {
             return (
               <Contacts
@@ -110,7 +111,7 @@ const ProfileData = ({ profile, isOwner, goToEditMode }) => {
 const Contacts = ({ contactTitls, contactValue }) => {
   return (
     <div className={s.contact}>
-      <b>{contactTitls}:</b>
+      <b>{contactTitls}: </b>
       {contactValue}
     </div>
   );
