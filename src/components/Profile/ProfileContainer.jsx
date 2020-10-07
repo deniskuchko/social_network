@@ -12,42 +12,36 @@ import { withRouter, Redirect } from "react-router-dom";
 import { withAuthRedirect } from "../../hoc/withAuthRedirect";
 import { compose } from "redux";
 
-class ProfileContainer extends React.Component {
-  refreshProfile() {
-    let usersId = this.props.match.params.usersId;
+const ProfileContainer = (props) => {
+  const refreshProfile = () => {
+    let usersId = props.match.params.usersId;
     if (!usersId) {
-      usersId = this.props.authorisedUserId;
+      usersId = props.authorisedUserId;
       if (!usersId) {
-        return this.props.history.push("/login");
+        return props.history.push("/login");
       }
     }
-    this.props.getUserProfile(usersId);
-    this.props.getStatus(usersId);
-  }
-  componentDidMount() {
-    this.refreshProfile();
-  }
-  componentDidUpdate(prevProps) {
-    if (this.props.match.params.usersId != prevProps.match.params.usersId) {
-      this.refreshProfile();
-    }
-  }
-  render() {
-    return (
-      <Profile
-        {...this.props}
-        isOwner={!this.props.match.params.usersId}
-        profile={this.props.profile}
-        status={this.props.status}
-        updateStatus={this.props.updateStatus}
-        savePhoto={this.props.savePhoto}
-        isPhotoSetup={this.props.isPhotoSetup}
-        saveProfile={this.props.saveProfile}
-        isDisabledSave={this.props.isDisabledSave}
-      />
-    );
-  }
-}
+    props.getUserProfile(usersId);
+    props.getStatus(usersId);
+  };
+
+  React.useEffect(() => refreshProfile(), [props.match.params.usersId]);
+
+  return (
+    <Profile
+      {...props}
+      isOwner={!props.match.params.usersId}
+      profile={props.profile}
+      status={props.status}
+      updateStatus={props.updateStatus}
+      savePhoto={props.savePhoto}
+      isPhotoSetup={props.isPhotoSetup}
+      saveProfile={props.saveProfile}
+      isDisabledSave={props.isDisabledSave}
+    />
+  );
+};
+
 let mapStateToProps = (state) => ({
   profile: state.profilePage.profile,
   status: state.profilePage.status,

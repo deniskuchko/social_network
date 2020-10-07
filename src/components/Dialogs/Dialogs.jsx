@@ -9,6 +9,7 @@ import { required, maxLengthCreator } from "../../utils/validators/validators";
 let Textarea = FormControl("textarea");
 
 let maxLength50 = maxLengthCreator(50);
+
 const Dialogs = (props) => {
   let state = props.dialogsPage;
 

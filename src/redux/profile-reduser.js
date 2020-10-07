@@ -134,11 +134,12 @@ export const saveProfile = (profile) => {
     if (response.data.resultCode === 0) {
       dispatch(getUserProfile(userId));
     } else {
+      dispatch(disabledSave(false));
+
       const contactError = response.data.messages.map((item) => {
         return item.split("->")[1].toLowerCase().split(")")[0];
       });
       contactError.forEach((element, index) => {
-        debugger;
         return dispatch(
           stopSubmit("edit-profile", {
             contacts: { [element]: response.data.messages[index] },

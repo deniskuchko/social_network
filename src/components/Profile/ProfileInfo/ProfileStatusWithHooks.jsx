@@ -8,6 +8,7 @@ const ProfileStatusWithHooks = (props) => {
   useEffect(() => {
     setStatus(props.status);
   }, [props.status]);
+
   const activatedEditMode = () => {
     setEditMode(true);
   };
